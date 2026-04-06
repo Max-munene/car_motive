@@ -141,7 +141,7 @@ export default defineNuxtConfig({
     public: {
       supabaseUrl: process.env.SUPABASE_URL,
       supabaseKey: process.env.SUPABASE_KEY,
-      whatsappNumber: process.env.WHATSAPP_NUMBER || "254712000001",
+      whatsappNumber: process.env.WHATSAPP_NUMBER || "254796314445",
       siteUrl: process.env.SITE_URL || "https://brimautomotive.co.ke",
     },
   },

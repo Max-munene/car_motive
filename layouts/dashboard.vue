@@ -14,7 +14,7 @@
                 <p
                   class="text-xs font-body font-500 uppercase tracking-wider text-ink-faint"
                 >
-                  {{ isAdmin ? "Admin Panel" : "My Account" }}
+                  {{ inAdminSection ? "Admin Panel" : "My Account" }}
                 </p>
               </div>
               <ul class="py-2">
@@ -26,14 +26,6 @@
                   >
                     <UIcon :name="link.icon" class="w-4 h-4 shrink-0" />
                     {{ link.label }}
-                    <UBadge
-                      v-if="link.badge"
-                      :label="String(link.badge)"
-                      color="error"
-                      variant="solid"
-                      size="xs"
-                      class="ml-auto"
-                    />
                   </NuxtLink>
                 </li>
               </ul>
@@ -51,6 +43,12 @@
 
 <script setup lang="ts">
 const { isAdmin } = useAuth();
+const route = useRoute();
+
+// Use current route path to determine which sidebar to show.
+// This is reliable even before profile loads, because admins
+// are always on /admin/* routes and sellers on /dashboard/*.
+const inAdminSection = computed(() => route.path.startsWith("/admin"));
 
 const sellerLinks = [
   { to: "/dashboard", icon: "i-heroicons-squares-2x2", label: "Overview" },
@@ -80,5 +78,8 @@ const adminLinks = [
   },
 ];
 
-const navLinks = computed(() => (isAdmin.value ? adminLinks : sellerLinks));
+// Route-based: if on /admin/*, show admin links regardless of profile load state
+const navLinks = computed(() =>
+  inAdminSection.value ? adminLinks : sellerLinks,
+);
 </script>

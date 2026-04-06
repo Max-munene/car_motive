@@ -50,7 +50,7 @@
             :href="`https://wa.me/${whatsapp}`"
             target="_blank"
             rel="noopener"
-            class="flex items-center gap-2 text-brand hover:underline"
+            class="flex items-center gap-2 text-success hover:underline"
           >
             <UIcon
               name="i-heroicons-chat-bubble-left-ellipsis"

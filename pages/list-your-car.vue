@@ -212,43 +212,90 @@
             <div>
               <h2 class="font-display text-xl text-ink">Pricing</h2>
               <p class="font-body text-xs text-ink-muted mt-0.5">
-                Set your asking price in Kenyan Shillings.
+                Enter your asking price and we'll show your Market Score
+                instantly.
               </p>
             </div>
           </div>
 
-          <div class="field-group max-w-xs">
-            <label class="field-label">Asking Price (KES) *</label>
-            <div class="price-input-wrap">
-              <span class="price-prefix">KES</span>
-              <input
-                v-model="form.price"
-                type="number"
-                placeholder="1,200,000"
-                required
-                class="price-input"
-              />
-            </div>
-          </div>
-
-          <!-- Market Score Preview -->
-          <Transition name="fade">
-            <div
-              v-if="scorePreview"
-              class="score-preview"
-              :class="scorePreview"
-            >
-              <div class="flex items-center gap-2">
-                <UIcon :name="scoreIcon" class="w-4 h-4 shrink-0" />
-                <p class="font-body font-500 text-sm">
-                  Market Score Preview: {{ scoreLabel }}
-                </p>
+          <div class="pricing-layout">
+            <!-- Price input -->
+            <div class="field-group">
+              <label class="field-label">Asking Price (KES) *</label>
+              <div class="price-input-wrap">
+                <span class="price-prefix">KES</span>
+                <input
+                  v-model="form.price"
+                  type="number"
+                  placeholder="1200000"
+                  required
+                  class="price-input"
+                />
               </div>
-              <p class="font-body text-xs mt-1 opacity-80 ml-6">
-                {{ scoreText }}
+              <p
+                v-if="marketRef"
+                class="text-xs font-body text-ink-faint mt-1.5"
+              >
+                Market range for {{ form.make }} {{ form.model }}:
+                <strong class="text-ink"
+                  >KES {{ formatNum(marketRef.min) }} –
+                  {{ formatNum(marketRef.max) }}</strong
+                >
+              </p>
+              <p
+                v-else-if="form.make && form.model"
+                class="text-xs font-body text-ink-faint mt-1.5"
+              >
+                No reference data for this model yet.
               </p>
             </div>
-          </Transition>
+
+            <!-- Live Market Score card -->
+            <Transition name="score-pop">
+              <div
+                v-if="scorePreview && form.price"
+                class="score-card"
+                :class="scorePreview"
+              >
+                <div class="score-icon-wrap">
+                  <UIcon :name="scoreIcon" class="w-6 h-6" />
+                </div>
+                <div>
+                  <p
+                    class="font-body text-xs uppercase tracking-wider font-500 opacity-70 mb-0.5"
+                  >
+                    Market Score
+                  </p>
+                  <p class="font-display text-xl">{{ scoreLabel }}</p>
+                  <p class="font-body text-xs mt-1 opacity-75 leading-relaxed">
+                    {{ scoreText }}
+                  </p>
+                </div>
+              </div>
+              <div
+                v-else-if="!scorePreview && form.price && !marketRef"
+                class="score-card neutral"
+              >
+                <div class="score-icon-wrap">
+                  <UIcon
+                    name="i-heroicons-question-mark-circle"
+                    class="w-6 h-6"
+                  />
+                </div>
+                <div>
+                  <p
+                    class="font-body text-xs uppercase tracking-wider font-500 opacity-70 mb-0.5"
+                  >
+                    Market Score
+                  </p>
+                  <p class="font-display text-xl">Not Available</p>
+                  <p class="font-body text-xs mt-1 opacity-75">
+                    Select make and model to see pricing intelligence.
+                  </p>
+                </div>
+              </div>
+            </Transition>
+          </div>
         </div>
 
         <!-- Step 5: Description -->
@@ -352,6 +399,12 @@ const form = reactive({
   description: "",
   location: "Nairobi",
   images: [] as { url: string; is_primary: boolean }[],
+});
+
+const formatNum = (n: number) => new Intl.NumberFormat("en-KE").format(n);
+const marketRef = computed(() => {
+  const key = `${form.make}_${form.model}`;
+  return marketRanges[key] ?? null;
 });
 
 const marketRanges: Record<string, { min: number; max: number }> = {
@@ -712,5 +765,75 @@ const driveOptions = [
 .fade-leave-to {
   opacity: 0;
   transform: translateY(-4px);
+}
+
+/* Pricing layout */
+.pricing-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+@media (max-width: 640px) {
+  .pricing-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Score card */
+.score-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1.5px solid;
+}
+.score-card.good_deal {
+  border-color: #86efac;
+  background: #f0fdf4;
+  color: #166534;
+}
+.score-card.fair_price {
+  border-color: #fcd34d;
+  background: #fffbeb;
+  color: #92400e;
+}
+.score-card.overpriced {
+  border-color: #fca5a5;
+  background: #fef2f2;
+  color: #991b1b;
+}
+.score-card.neutral {
+  border-color: var(--color-surface-3);
+  background: var(--color-surface-2);
+  color: var(--color-ink-muted);
+}
+
+.score-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Score pop animation */
+.score-pop-enter-active {
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.score-pop-leave-active {
+  transition: all 0.15s ease;
+}
+.score-pop-enter-from {
+  opacity: 0;
+  transform: scale(0.9) translateY(4px);
+}
+.score-pop-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
 }
 </style>

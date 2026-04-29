@@ -132,13 +132,23 @@ const handleFiles = async (e: Event) => {
   uploading.value = true;
 
   try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) throw new Error("User not authenticated");
+
     for (const file of files) {
       if (images.value.length >= props.maxImages) break;
 
       const ext = file.name.split(".").pop();
-      const path = `listings/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
-      const { data, error } = await supabase.storage
+      // ✅ FIX: include user.id as first folder
+      const path = `${user.id}/${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2)}.${ext}`;
+
+      const { error } = await supabase.storage
         .from("car-images")
         .upload(path, file, { cacheControl: "3600", upsert: false });
 
@@ -153,6 +163,7 @@ const handleFiles = async (e: Event) => {
         is_primary: images.value.length === 0,
       });
     }
+
     emit("update:modelValue", images.value);
   } catch (err) {
     console.error("Upload failed:", err);
@@ -163,7 +174,7 @@ const handleFiles = async (e: Event) => {
 };
 
 const setPrimary = (idx: number) => {
-  images.value = images.value.map((img, i) => ({
+  images.value = images.value.map((img: any, i: number) => ({
     ...img,
     is_primary: i === idx,
   }));

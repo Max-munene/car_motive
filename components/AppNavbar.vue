@@ -138,7 +138,8 @@ const { count } = useComparison();
 const mobileOpen = ref(false);
 
 const navLinks = [
-	{ to: '/', label: 'Cars' },
+	{ to: '/', label: 'Home' },
+	{ to: '/cars', label: 'Cars' },
 	{ to: '/compare', label: 'Compare' },
 	{ to: '/articles', label: 'Guides' },
 	{ to: '/about', label: 'About' },

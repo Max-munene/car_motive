@@ -1,295 +1,163 @@
-<!-- pages/index.vue -->
 <template>
-  <div>
-    <!-- Search hero -->
-    <section class="bg-surface border-b border-surface-3 py-8">
-      <div class="container-brim">
-        <div class="max-w-2xl">
-          <h1 class="font-display text-3xl sm:text-4xl text-ink leading-tight">
-            Buy Cars With Confidence,<br />
-            <span style="color: var(--color-brand)">not Guesswork.</span>
+  <div class="bg-background min-h-screen">
+    <Navbar />
+
+    <section class="relative min-h-[90vh] flex items-center overflow-hidden border-b border-surface-3">
+      <div class="absolute inset-0 z-0">
+        <img :src="heroImage"
+          alt="Luxury car"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-linear-to-b from-white to-transparent" />
+      </div>
+
+      <div class="relative z-10 container mx-auto px-6 py-24 text-center">
+        <div class="max-w-4xl mx-auto space-y-8">
+          <h1 class="font-display text-4xl md:text-7xl font-700 tracking-tight text-white">
+            Buy Cars With 
+            <span :style="{ color: 'var(--color-brand)' }">Confidence</span>, Not Guesswork
           </h1>
-          <p class="font-body text-ink-muted mt-2 text-base">
-            {{ total }} verified listings — with Market Score pricing on every
-            car.
-          </p>
-        </div>
 
-        <!-- Search bar -->
-        <div class="mt-6 flex gap-2 max-w-xl">
-          <div class="flex-1 relative">
-            <UIcon
-              name="i-heroicons-magnifying-glass"
-              class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-faint pointer-events-none"
-            />
-            <input
-              v-model="searchInput"
-              type="text"
-              placeholder="Search make, model, colour..."
-              class="w-full pl-9 pr-4 py-2.5 text-sm font-body bg-surface border border-surface-3 rounded-md focus:outline-none focus:border-brand text-ink placeholder:text-ink-faint transition-colors"
-              @keydown.enter="applySearch"
-            />
-          </div>
-          <UButton
-            size="md"
-            class="font-body font-400 shrink-0"
-            style="background-color: var(--color-brand); color: white"
-            @click="applySearch"
-          >
-            Search
-          </UButton>
-        </div>
 
-        <!-- Active filter chips -->
-        <div
-          v-if="activeFilterChips.length > 0"
-          class="flex flex-wrap gap-2 mt-4"
-        >
-          <span
-            v-for="chip in activeFilterChips"
-            :key="chip.key"
-            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-surface-3 text-xs font-body text-ink-soft bg-surface"
-          >
-            {{ chip.label }}
-            <button
-              @click="removeChip(chip.key)"
-              class="hover:text-brand transition-colors"
+          <div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+            <UButton
+              to="/cars"
+              size="xl"
+              class="font-body font-500 px-8"
+              :style="{ backgroundColor: 'var(--color-brand)', color: 'white' }"
             >
-              <UIcon name="i-heroicons-x-mark" class="w-3 h-3" />
-            </button>
-          </span>
-          <button
-            class="text-xs font-body text-ink-faint hover:text-brand transition-colors"
-            @click="clearAllFilters"
-          >
-            Clear all
-          </button>
+              Explore Listings
+              <UIcon name="i-heroicons-arrow-right" class="ml-2 w-5 h-5" />
+            </UButton>
+
+           
+          </div>
+          
+          <p class="font-body text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
+            Verified listings, real market pricing, and tools built for smart car buyers across Nairobi.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- Main content -->
-    <div class="container-brim py-8">
-      <div class="flex gap-8">
-        <!-- Filters sidebar - desktop -->
-        <aside class="hidden lg:block w-56 shrink-0">
-          <div class="sticky top-20">
-            <ListingFilters v-model="filters" />
-          </div>
-        </aside>
+    <section class="py-24 bg-surface-2/50">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="font-display text-3xl md:text-4xl text-ink">Why BrimXAuto?</h2>
+          <p class="font-body text-ink-muted max-w-xl mx-auto mt-3">
+            A modern car marketplace built on transparency and trust.
+          </p>
+        </div>
 
-        <!-- Listings grid -->
-        <div class="flex-1 min-w-0">
-          <!-- Toolbar -->
-          <div class="flex items-center justify-between mb-5 gap-4">
-            <p class="text-sm font-body text-ink-muted">
-              <span v-if="!pending"
-                >{{ total }} car{{ total !== 1 ? "s" : "" }} found</span
-              >
-              <span v-else>Loading...</span>
-            </p>
-            <div class="flex items-center gap-3">
-              <!-- Mobile filters -->
-              <UButton
-                variant="outline"
-                size="sm"
-                class="lg:hidden font-body"
-                @click="mobileFiltersOpen = true"
-              >
-                <UIcon name="i-heroicons-funnel" class="w-4 h-4" />
-                Filters
-              </UButton>
-
-              <!-- Sort -->
-              <USelect
-                v-model="filters.sort"
-                :items="sortOptions"
-                size="sm"
-                class="font-body w-40"
-              />
-            </div>
-          </div>
-
-          <!-- Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div
-            v-if="pending"
-            class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5"
+            v-for="(prop, idx) in valueProps"
+            :key="idx"
+            class="group rounded-xl border border-surface-3 bg-surface p-8 shadow-card transition-all hover:-translate-y-1"
           >
-            <div
-              v-for="i in 6"
-              :key="i"
-              class="bg-surface-2 rounded-lg aspect-[4/5] img-shimmer"
-            />
-          </div>
-
-          <div
-            v-else-if="listings.length > 0"
-            class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5"
-          >
-            <CarCard
-              v-for="listing in listings"
-              :key="listing.id"
-              :listing="listing"
-            />
-          </div>
-
-          <div v-else class="text-center py-20">
-            <UIcon
-              name="i-heroicons-magnifying-glass"
-              class="w-10 h-10 text-ink-faint mx-auto mb-3"
-            />
-            <p class="font-display text-xl text-ink-soft">No cars found</p>
-            <p class="font-body text-sm text-ink-faint mt-1">
-              Try adjusting your search or filters.
-            </p>
-            <UButton
-              variant="ghost"
-              class="mt-4 font-body text-brand"
-              @click="clearAllFilters"
+            <div 
+              class="w-12 h-12 rounded-lg flex items-center justify-center mb-6"
+              :style="{ backgroundColor: 'rgba(var(--color-brand-rgb), 0.1)' }"
             >
-              Clear filters
-            </UButton>
+              <UIcon :name="prop.icon" class="w-6 h-6" :style="{ color: 'var(--color-brand)' }" />
+            </div>
+            <h3 class="font-display text-lg text-ink mb-2">{{ prop.title }}</h3>
+            <p class="font-body text-sm text-ink-muted leading-relaxed">
+              {{ prop.description }}
+            </p>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Mobile filters drawer -->
-    <USlideover
-      v-model:open="mobileFiltersOpen"
-      side="left"
-      :ui="{ width: 'max-w-xs' }"
-    >
-      <template #content>
-        <div class="p-6 overflow-y-auto h-full">
-          <ListingFilters
-            v-model="filters"
-            @apply="mobileFiltersOpen = false"
+    <section class="py-24">
+      <div class="container mx-auto px-6">
+        <div class="flex items-end justify-between mb-12 gap-4">
+          <div>
+            <h2 class="font-display text-3xl md:text-4xl text-ink">Featured Listings</h2>
+            <p class="font-body text-ink-muted mt-2">
+              Cars with strong value and excellent market positioning
+            </p>
+          </div>
+
+          <UButton
+            to="/cars"
+            variant="ghost"
+            class="font-body text-ink-muted hover:text-brand"
+          >
+            View all <UIcon name="i-heroicons-chevron-right" class="ml-1 w-4 h-4" />
+          </UButton>
+        </div>
+
+        <div v-if="loading" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div v-for="i in 3" :key="i" class="h-64 bg-surface-2 rounded-xl img-shimmer" />
+        </div>
+
+        <div v-else-if="featuredListings.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <CarCard
+            v-for="car in featuredListings"
+            :key="car.id"
+            :car="car"
           />
         </div>
-      </template>
-    </USlideover>
+
+       
+      </div>
+    </section>
+
+    <Newsletter />
+    <Footer />
+
+   
   </div>
 </template>
 
 <script setup lang="ts">
-import type { ListingFilters, CarListingCard } from "~/types";
+import { useFetch } from "nuxt/app";
+import { computed, ref } from "vue";
+// import { sampleCars } from "@/data/sampleCars";
 
-useSeo({
-  title: "BRIM Automotive — Buy & Sell Cars in Nairobi, Kenya",
-  description:
-    "Browse verified used cars for sale in Nairobi. Market Score shows if a price is fair before you buy.",
+// Nuxt 3 auto-imports ref, computed, and useSeo
+useSeo({ title: "BrimXAuto - Buy Cars with Confidence" });
+
+const heroImage = 'hero-car.jpg';
+
+const featuredQuery = ref({
+  sort: 'newest',
+  limit: 6,
+  page: 1
 });
 
-const filters = ref<ListingFilters>({ sort: "newest", page: 1, limit: 12 });
-const searchInput = ref("");
-const mobileFiltersOpen = ref(false);
-const total = ref(0);
+const { data: res, pending } = await useFetch('/api/listings', {
+  query: featuredQuery,
+});
 
-// Native debounce — no VueUse dependency needed
-const queryParams = ref<Record<string, any>>({});
+const featuredListings = computed(() => (res.value as any)?.data ?? []);
 
-let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
-const buildQuery = (f: ListingFilters): Record<string, any> => {
-  const q: Record<string, any> = {};
-  if (f.search) q.search = f.search;
-  if (f.make) q.make = f.make;
-  if (f.model) q.model = f.model;
-  if (f.body_type) q.body_type = f.body_type;
-  if (f.transmission) q.transmission = f.transmission;
-  if (f.fuel_type) q.fuel_type = f.fuel_type;
-  if (f.market_score) q.market_score = f.market_score;
-  if (f.price_min) q.price_min = f.price_min;
-  if (f.price_max) q.price_max = f.price_max;
-  if (f.year_min) q.year_min = f.year_min;
-  if (f.year_max) q.year_max = f.year_max;
-  if (f.sort) q.sort = f.sort;
-  q.page = f.page ?? 1;
-  q.limit = f.limit ?? 12;
-  return q;
-};
+// const isSignupOpen = ref(false);
+const loading = ref(false); // Simulate loading if needed
 
-// Initialise query params immediately
-queryParams.value = buildQuery(filters.value);
-
-watch(
-  filters,
-  (f) => {
-    if (debounceTimer) clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-      queryParams.value = buildQuery(f);
-    }, 350);
+const valueProps = [
+  {
+    icon: "i-heroicons-shield-check",
+    title: "Verified Listings",
+    description: "Every vehicle is reviewed for accuracy, history, and legitimacy.",
   },
-  { deep: true },
-);
-
-const { data: res, pending } = await useLazyFetch("/api/listings", {
-  query: queryParams,
-});
-
-const listings = computed<CarListingCard[]>(
-  () => (res.value as any)?.data ?? [],
-);
-watch(res, (v) => {
-  if (v) total.value = (v as any).total ?? listings.value.length;
-});
-
-// Search
-const applySearch = () => {
-  filters.value = { ...filters.value, search: searchInput.value, page: 1 };
-};
-
-// Filter chips
-const activeFilterChips = computed(() => {
-  const chips: { key: string; label: string }[] = [];
-  const f = filters.value;
-  if (f.search) chips.push({ key: "search", label: `"${f.search}"` });
-  if (f.make) chips.push({ key: "make", label: f.make! });
-  if (f.body_type) chips.push({ key: "body_type", label: f.body_type! });
-  if (f.transmission)
-    chips.push({ key: "transmission", label: f.transmission! });
-  if (f.fuel_type) chips.push({ key: "fuel_type", label: f.fuel_type! });
-  if (f.market_score)
-    chips.push({
-      key: "market_score",
-      label: f.market_score!.replace("_", " "),
-    });
-  if (f.price_min || f.price_max)
-    chips.push({
-      key: "price",
-      label: `KES ${f.price_min ?? 0}–${f.price_max ?? "∞"}`,
-    });
-  if (f.year_min || f.year_max)
-    chips.push({
-      key: "year",
-      label: `${f.year_min ?? ""}–${f.year_max ?? ""}`,
-    });
-  return chips;
-});
-
-const removeChip = (key: string) => {
-  const f = { ...filters.value } as any;
-  if (key === "price") {
-    f.price_min = undefined;
-    f.price_max = undefined;
-  } else if (key === "year") {
-    f.year_min = undefined;
-    f.year_max = undefined;
-  } else f[key] = "";
-  f.page = 1;
-  filters.value = f;
-};
-
-const clearAllFilters = () => {
-  filters.value = { sort: "newest", page: 1, limit: 12 };
-  searchInput.value = "";
-};
-
-const sortOptions = [
-  { label: "Newest first", value: "newest" },
-  { label: "Price: Low to high", value: "price_asc" },
-  { label: "Price: High to low", value: "price_desc" },
-  { label: "Lowest mileage", value: "mileage_asc" },
+  {
+    icon: "i-heroicons-chart-bar",
+    title: "Market Reality Scores",
+    description: "Instant price intelligence based on similar cars in your area.",
+  },
+  {
+    icon: "i-heroicons-map-pin",
+    title: "Local & Import Ready",
+    description: "Browse local inventory or explore clean import options transparently.",
+  },
+  {
+    icon: "i-heroicons-bell",
+    title: "Smart Deal Alerts",
+    description: "Be first to know when high-value deals hit the market.",
+  },
 ];
 </script>

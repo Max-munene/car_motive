@@ -86,6 +86,10 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute, useRouter } from 'nuxt/app';
+import { ref } from 'vue';
+import { useAuth } from '../../composables/useAuth';
+
 definePageMeta({ layout: "auth" });
 useSeo({ title: "Sign In", noIndex: true });
 

@@ -126,7 +126,7 @@ const handleRegister = async () => {
     const { data, error: signUpError } = await supabase.auth.signUp({
       email: email.value,
       password: password.value,
-      options: { data: { full_name: fullName.value } },
+      options: { data: { full_name: fullName.value } ,emailRedirectTo: `https://car-motive.vercel.app/auth/confirm`},
     });
 
     if (signUpError) throw signUpError;

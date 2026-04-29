@@ -6,14 +6,10 @@
         <!-- Brand -->
         <div class="lg:col-span-2">
           <NuxtLink to="/" class="inline-block mb-4">
-            <span class="flex items-center gap-2">
-              <span
-                class="w-8 h-8 rounded-sm flex items-center justify-center text-white text-sm font-display"
-                style="background-color: var(--color-brand)"
-                >B</span
-              >
+            <<span class="flex items-center gap-2">
+              <BrimLogo  />
               <span class="font-display text-xl text-white tracking-tight"
-                >BRIM Automotive</span
+                >BRIM x Auto</span
               >
             </span>
           </NuxtLink>
@@ -80,7 +76,7 @@
         class="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row justify-between gap-3"
       >
         <p class="text-xs font-body text-white/30">
-          &copy; {{ new Date().getFullYear() }} BRIM Automotive. All rights
+          &copy; {{ new Date().getFullYear() }} BRIM x Auto. All rights
           reserved.
         </p>
         <p class="text-xs font-body text-white/20">Roysambu, Nairobi, Kenya</p>
@@ -90,6 +86,8 @@
 </template>
 
 <script setup lang="ts">
+import BrimLogo from './BrimLogo.vue';
+
 const config = useRuntimeConfig();
 const whatsapp = config.public.whatsappNumber;
 

@@ -1,8 +1,8 @@
 <!-- pages/about.vue -->
 <template>
   <div class="container-brim py-12 max-w-2xl">
-    <h1 class="font-display text-4xl text-ink mb-2">About BRIM</h1>
-    <p class="font-body text-ink-muted mb-10">Roysambu, Nairobi · Est. 2024</p>
+    <h1 class="font-display text-4xl text-ink mb-2">About BRIM Auto</h1>
+    <p class="font-body text-ink-muted mb-10">Roysambu, Nairobi · Est. 2026</p>
 
     <div class="space-y-8 font-body text-sm text-ink-soft leading-relaxed">
       <div>

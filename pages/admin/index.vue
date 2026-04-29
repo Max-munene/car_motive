@@ -4,7 +4,7 @@
     <div>
       <h1 class="font-display text-2xl text-ink">Admin Overview</h1>
       <p class="font-body text-sm text-ink-muted mt-0.5">
-        BRIM Automotive management panel.
+        BRIM X Auto management panel.
       </p>
     </div>
 

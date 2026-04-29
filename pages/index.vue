@@ -6,8 +6,8 @@
       <div class="container-brim">
         <div class="max-w-2xl">
           <h1 class="font-display text-3xl sm:text-4xl text-ink leading-tight">
-            Find your next car<br />
-            <span style="color: var(--color-brand)">in Nairobi.</span>
+            Buy Cars With Confidence,<br />
+            <span style="color: var(--color-brand)">not Guesswork.</span>
           </h1>
           <p class="font-body text-ink-muted mt-2 text-base">
             {{ total }} verified listings — with Market Score pricing on every

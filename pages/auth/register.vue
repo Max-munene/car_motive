@@ -105,11 +105,14 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter, useRuntimeConfig } from 'nuxt/app';
+import { ref } from 'vue';
+
 definePageMeta({ layout: "auth" });
 useSeo({ title: "Create Account", noIndex: true });
 
 const supabase = useSupabaseClient();
-const { fetchProfile } = useAuth();
+// const { fetchProfile } = useAuth();
 const router = useRouter();
 
 const fullName = ref("");
@@ -119,6 +122,40 @@ const showPassword = ref(false);
 const loading = ref(false);
 const error = ref("");
 
+// const handleRegister = async () => {
+//   loading.value = true;
+//   error.value = "";
+//   try {
+//     const { data, error: signUpError } = await supabase.auth.signUp({
+//       email: email.value,
+//       password: password.value,
+//       options: { data: { full_name: fullName.value } },
+//     });
+
+//     if (signUpError) throw signUpError;
+
+//     // Update the auto-created profile with the full name
+//     if (data.user) {
+//       await supabase
+//         .from("profiles")
+//         .update({ full_name: fullName.value })
+//         .eq("id", data.user.id);
+
+//       await fetchProfile();
+//     }
+
+//     // Email confirmation is disabled — push straight to dashboard
+//     await router.push("/dashboard");
+//   } catch (e: any) {
+//     error.value = e?.message ?? "Registration failed. Please try again.";
+//   } finally {
+//     loading.value = false;
+//   }
+// };
+
+// When true, hide the form and show the "check your email" screen.
+const registered = ref(false);
+ 
 const handleRegister = async () => {
   loading.value = true;
   error.value = "";
@@ -126,23 +163,34 @@ const handleRegister = async () => {
     const { data, error: signUpError } = await supabase.auth.signUp({
       email: email.value,
       password: password.value,
-      options: { data: { full_name: fullName.value } },
+      options: {
+        data: { full_name: fullName.value },
+        // Supabase will redirect the confirmation link to /auth/confirm
+        // which is already set as the callback in nuxt.config.ts
+        emailRedirectTo: `${useRuntimeConfig().public.siteUrl}/auth/confirm`,
+      },
     });
-
+ 
     if (signUpError) throw signUpError;
-
-    // Update the auto-created profile with the full name
-    if (data.user) {
-      await supabase
-        .from("profiles")
-        .update({ full_name: fullName.value })
-        .eq("id", data.user.id);
-
-      await fetchProfile();
+ 
+    // If email confirmation is DISABLED in Supabase dashboard,
+    // data.session will be non-null and we can go straight to dashboard.
+    if (data.session) {
+      // Update profile with full name
+      if (data.user) {
+        await supabase
+          .from("profiles")
+          .update({ full_name: fullName.value })
+          .eq("id", data.user.id);
+      }
+      await router.push("/dashboard");
+      return;
     }
-
-    // Email confirmation is disabled — push straight to dashboard
-    await router.push("/dashboard");
+ 
+    // Email confirmation is ENABLED — show the "check your inbox" screen.
+    // The profile full_name will be written by a Supabase DB trigger or
+    // updated when the user lands on /auth/confirm after clicking the link.
+    registered.value = true;
   } catch (e: any) {
     error.value = e?.message ?? "Registration failed. Please try again.";
   } finally {

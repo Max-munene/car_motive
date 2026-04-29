@@ -129,6 +129,9 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from 'nuxt/app';
+import { computed, ref, watch } from 'vue';
+
 const { isAuthenticated, isAdmin, profile, signOut } = useAuth();
 const { count } = useComparison();
 

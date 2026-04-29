@@ -1,9 +1,14 @@
-/* assets/css/main.css */
+/**
+ * assets/css/main.css
+ *
+ * @format
+ */
+
 /* BRIM Automotive — Design System */
 /* Kenyan minimalist: warm earth tones, clean type, confident space */
 
-@import "tailwindcss";
-@import "./forms.css";
+@import 'tailwindcss';
+@import './forms.css';
 
 /* ── Fonts ─────────────────────────────────────────────────── */
 /* DM Serif Display — headings, brand moments */
@@ -11,69 +16,69 @@
 
 /* ── Design Tokens ─────────────────────────────────────────── */
 :root {
-  /* Brand */
-  --color-brand: #c8392b; /* Kenyan red — bold, confident */
-  --color-brand-light: #e8534a;
-  --color-brand-dark: #9b2a20;
-  --color-brand-subtle: #fdf2f1;
+	/* Brand */
+	--color-brand: #08a4a7; /*Electric Blue — bold, confident */
+	--color-brand-light: #91ffff;
+	--color-brand-dark: #08a4a7;
+	--color-brand-subtle: #e9ffff;
 
-  /* Neutrals — warm, not cold */
-  --color-ink: #1a1614; /* Almost black, warm tint */
-  --color-ink-soft: #3d3330;
-  --color-ink-muted: #6b5f5c;
-  --color-ink-faint: #a09390;
+	/* Neutrals — warm, not cold */
+	--color-ink: #1a1614; /* Almost black, warm tint */
+	--color-ink-soft: #3d3330;
+	--color-ink-muted: #6b5f5c;
+	--color-ink-faint: #a09390;
 
-  --color-surface: #faf9f7; /* Warm white */
-  --color-surface-2: #f3f0ec; /* Cards, inputs */
-  --color-surface-3: #ebe6e0; /* Borders, dividers */
-  --color-surface-inv: #1a1614; /* Dark surfaces */
+	--color-surface: #faf9f7; /* Warm white */
+	--color-surface-2: #f3f0ec; /* Cards, inputs */
+	--color-surface-3: #ebe6e0; /* Borders, dividers */
+	--color-surface-inv: #1a1614; /* Dark surfaces */
 
-  /* Semantic */
-  --color-good-deal: #1a7f5a;
-  --color-good-deal-bg: #edfaf4;
-  --color-fair-price: #b06a00;
-  --color-fair-price-bg: #fef7e8;
-  --color-overpriced: #c0392b;
-  --color-overpriced-bg: #fdf2f1;
+	/* Semantic */
+	--color-good-deal: #1a7f5a;
+	--color-good-deal-bg: #edfaf4;
+	--color-fair-price: #b06a00;
+	--color-fair-price-bg: #fef7e8;
+	--color-overpriced: #c0392b;
+	--color-overpriced-bg: #fdf2f1;
 
-  /* Typography */
-  --font-display: "DM Serif Display", Georgia, serif;
-  --font-body: "DM Sans", system-ui, sans-serif;
+	/* Typography */
+	--font-display: 'DM Serif Display', Georgia, serif;
+	--font-body: 'DM Sans', system-ui, sans-serif;
 
-  /* Spacing */
-  --nav-height: 64px;
+	/* Spacing */
+	--nav-height: 64px;
 
-  /* Radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 16px;
-  --radius-full: 9999px;
+	/* Radius */
+	--radius-sm: 4px;
+	--radius-md: 8px;
+	--radius-lg: 16px;
+	--radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-card:
-    0 1px 3px 0 rgb(26 22 20 / 0.08), 0 1px 2px -1px rgb(26 22 20 / 0.08);
-  --shadow-card-hover: 0 8px 24px -4px rgb(26 22 20 / 0.12);
-  --shadow-nav: 0 1px 0 0 var(--color-surface-3);
+	/* Shadows */
+	--shadow-card:
+		0 1px 3px 0 rgb(26 22 20 / 0.08), 0 1px 2px -1px rgb(26 22 20 / 0.08);
+	--shadow-card-hover: 0 8px 24px -4px rgb(26 22 20 / 0.12);
+	--shadow-nav: 0 1px 0 0 var(--color-surface-3);
 }
 
 /* ── Base Reset ─────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	scroll-behavior: smooth;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  font-family: var(--font-body);
-  background-color: var(--color-surface);
-  color: var(--color-ink);
-  line-height: 1.6;
+	font-family: var(--font-body);
+	background-color: var(--color-surface);
+	color: var(--color-ink);
+	line-height: 1.6;
 }
 
 /* ── Typography Scale ───────────────────────────────────────── */
@@ -83,162 +88,162 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-display);
-  line-height: 1.2;
-  color: var(--color-ink);
+	font-family: var(--font-display);
+	line-height: 1.2;
+	color: var(--color-ink);
 }
 
 .font-display {
-  font-family: var(--font-display);
+	font-family: var(--font-display);
 }
 .font-body {
-  font-family: var(--font-body);
+	font-family: var(--font-body);
 }
 
 /* ── Tailwind v4 Custom Utilities ───────────────────────────── */
 @layer utilities {
-  .text-brand {
-    color: var(--color-brand);
-  }
-  .bg-brand {
-    background-color: var(--color-brand);
-  }
-  .bg-brand-subtle {
-    background-color: var(--color-brand-subtle);
-  }
-  .border-brand {
-    border-color: var(--color-brand);
-  }
+	.text-brand {
+		color: var(--color-brand);
+	}
+	.bg-brand {
+		background-color: var(--color-brand);
+	}
+	.bg-brand-subtle {
+		background-color: var(--color-brand-subtle);
+	}
+	.border-brand {
+		border-color: var(--color-brand);
+	}
 
-  .text-ink {
-    color: var(--color-ink);
-  }
-  .text-ink-soft {
-    color: var(--color-ink-soft);
-  }
-  .text-ink-muted {
-    color: var(--color-ink-muted);
-  }
-  .text-ink-faint {
-    color: var(--color-ink-faint);
-  }
+	.text-ink {
+		color: var(--color-ink);
+	}
+	.text-ink-soft {
+		color: var(--color-ink-soft);
+	}
+	.text-ink-muted {
+		color: var(--color-ink-muted);
+	}
+	.text-ink-faint {
+		color: var(--color-ink-faint);
+	}
 
-  .bg-surface {
-    background-color: var(--color-surface);
-  }
-  .bg-surface-2 {
-    background-color: var(--color-surface-2);
-  }
-  .bg-surface-3 {
-    background-color: var(--color-surface-3);
-  }
-  .bg-surface-inv {
-    background-color: var(--color-surface-inv);
-  }
+	.bg-surface {
+		background-color: var(--color-surface);
+	}
+	.bg-surface-2 {
+		background-color: var(--color-surface-2);
+	}
+	.bg-surface-3 {
+		background-color: var(--color-surface-3);
+	}
+	.bg-surface-inv {
+		background-color: var(--color-surface-inv);
+	}
 
-  .border-surface-3 {
-    border-color: var(--color-surface-3);
-  }
+	.border-surface-3 {
+		border-color: var(--color-surface-3);
+	}
 
-  .shadow-card {
-    box-shadow: var(--shadow-card);
-  }
-  .shadow-card-hover {
-    box-shadow: var(--shadow-card-hover);
-  }
+	.shadow-card {
+		box-shadow: var(--shadow-card);
+	}
+	.shadow-card-hover {
+		box-shadow: var(--shadow-card-hover);
+	}
 
-  /* Market Score badges */
-  .badge-good-deal {
-    color: var(--color-good-deal);
-    background-color: var(--color-good-deal-bg);
-  }
-  .badge-fair-price {
-    color: var(--color-fair-price);
-    background-color: var(--color-fair-price-bg);
-  }
-  .badge-overpriced {
-    color: var(--color-overpriced);
-    background-color: var(--color-overpriced-bg);
-  }
+	/* Market Score badges */
+	.badge-good-deal {
+		color: var(--color-good-deal);
+		background-color: var(--color-good-deal-bg);
+	}
+	.badge-fair-price {
+		color: var(--color-fair-price);
+		background-color: var(--color-fair-price-bg);
+	}
+	.badge-overpriced {
+		color: var(--color-overpriced);
+		background-color: var(--color-overpriced-bg);
+	}
 
-  /* Layout */
-  .container-brim {
-    width: 100%;
-    max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
+	/* Layout */
+	.container-brim {
+		width: 100%;
+		max-width: 1280px;
+		margin-left: auto;
+		margin-right: auto;
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+	}
 
-  @media (min-width: 640px) {
-    .container-brim {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-  }
+	@media (min-width: 640px) {
+		.container-brim {
+			padding-left: 2rem;
+			padding-right: 2rem;
+		}
+	}
 
-  .pt-nav {
-    padding-top: var(--nav-height);
-  }
+	.pt-nav {
+		padding-top: var(--nav-height);
+	}
 
-  /* Card hover transition */
-  .card-lift {
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
-  }
-  .card-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-card-hover);
-  }
+	/* Card hover transition */
+	.card-lift {
+		transition:
+			transform 0.2s ease,
+			box-shadow 0.2s ease;
+	}
+	.card-lift:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-card-hover);
+	}
 }
 
 /* ── Page Transitions ───────────────────────────────────────── */
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 0.2s ease;
+	transition: opacity 0.2s ease;
 }
 .page-enter-from,
 .page-leave-to {
-  opacity: 0;
+	opacity: 0;
 }
 
 /* ── Scrollbar ──────────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+	width: 6px;
+	height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-surface-2);
+	background: var(--color-surface-2);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface-3);
-  border-radius: 3px;
+	background: var(--color-surface-3);
+	border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-ink-faint);
+	background: var(--color-ink-faint);
 }
 
 /* ── Image loading shimmer ──────────────────────────────────── */
 .img-shimmer {
-  background: linear-gradient(
-    90deg,
-    var(--color-surface-2) 0%,
-    var(--color-surface-3) 50%,
-    var(--color-surface-2) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+	background: linear-gradient(
+		90deg,
+		var(--color-surface-2) 0%,
+		var(--color-surface-3) 50%,
+		var(--color-surface-2) 100%
+	);
+	background-size: 200% 100%;
+	animation: shimmer 1.5s infinite;
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+	0% {
+		background-position: -200% 0;
+	}
+	100% {
+		background-position: 200% 0;
+	}
 }
 
 /* ── Nuxt UI Theme Overrides ─────────────────────────────────── */

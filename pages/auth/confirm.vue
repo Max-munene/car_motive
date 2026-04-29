@@ -12,13 +12,24 @@
 </template>
 
 <script setup lang="ts">
+import { watch } from 'vue';
+
 definePageMeta({ layout: false });
 
 const router = useRouter();
+const user = useSupabaseUser();
 
-onMounted(async () => {
-  // Supabase handles the token in the URL automatically via @nuxtjs/supabase
-  // Redirect after a short delay
-  setTimeout(() => router.push("/dashboard"), 1500);
+watch(user, (u) => {
+  // only redirect once Supabase has a confirmed user
+  if (u?.email_confirmed_at) {
+    router.push("/dashboard");
+  }
 });
+
+// fallback (optional): if nothing happens after some time
+setTimeout(() => {
+  if (!user.value) {
+    router.push("/auth/login");
+  }
+}, 5000);
 </script>

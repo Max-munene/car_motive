@@ -30,7 +30,7 @@ export const useAuth = () => {
 				.from('profiles')
 				.select('*')
 				.eq('id', user.value.id)
-				.single();
+				.maybesingle();
 			if (data) profile.value = data as Profile;
 		} catch {
 			profile.value = null;

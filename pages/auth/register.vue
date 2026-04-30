@@ -19,8 +19,7 @@
             v-model="fullName"
             placeholder="Max Munene"
             autocomplete="name"
-            variant="outline"
-            class="font-body border border-gray-300 rounded-md flex"
+            class="font-body"
             required
           />
         </div>
@@ -33,7 +32,7 @@
             type="email"
             placeholder="your@email.com"
             autocomplete="email"
-            class="font-body border border-gray-300 rounded-md flex"
+            class="font-body"
             required
           />
         </div>
@@ -46,7 +45,7 @@
             :type="showPassword ? 'text' : 'password'"
             placeholder="Minimum 8 characters"
             autocomplete="new-password"
-            class="font-body border border-gray-300 rounded-md flex "
+            class="font-body"
             required
             minlength="8"
           >

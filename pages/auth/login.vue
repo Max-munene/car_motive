@@ -112,6 +112,18 @@ const handleLogin = async () => {
       password.value,
     );
 
+//        const { data: profile } = await supabase
+//   .from('profiles')
+//   .select('id')
+//   .eq('id', user.id)
+//   .single();
+
+// if (!profile) {
+//   throw new Error('Profile does not exist');
+// }
+
+
+ 
     const redirectParam = route.query.redirect as string | undefined;
 
     if (redirectParam && !redirectParam.startsWith("/auth")) {

@@ -1,72 +1,78 @@
-/* assets/css/forms.css */
+/**
+ * assets/css/forms.css
+ *
+ * @format
+ */
+
 /* Nuxt UI v3 form element overrides — warm backgrounds, clear borders */
 
 /* Select dropdowns */
-[data-slot="select"],
-[data-slot="input"],
-[data-slot="textarea"] {
-  background-color: var(--color-surface) !important;
-  border-color: var(--color-surface-3) !important;
-  color: var(--color-ink) !important;
-  font-family: var(--font-body) !important;
+[data-slot='select'],
+[data-slot='input'],
+[data-slot='textarea'] {
+	background-color: var(--color-surface) !important;
+	border: 1px solid var(--color-surface-3) !important; /* FIX */
+	color: var(--color-ink) !important;
+	font-family: var(--font-body) !important;
+	border-radius: var(--radius-md); /* optional but recommended */
 }
 
-[data-slot="select"]:focus-within,
-[data-slot="input"]:focus-within {
-  border-color: var(--color-brand) !important;
-  outline: none !important;
+[data-slot='select']:focus-within,
+[data-slot='input']:focus-within {
+	border: 0.15rem solid var(--color-brand) !important;
+	outline: none !important;
 }
 
 /* Select content popup */
-[data-slot="content"],
+[data-slot='content'],
 [data-radix-popper-content-wrapper] {
-  background-color: var(--color-surface) !important;
-  border: 1px solid var(--color-surface-3) !important;
-  border-radius: var(--radius-md) !important;
-  box-shadow: var(--shadow-card-hover) !important;
+	background-color: var(--color-surface) !important;
+	border: 1px solid var(--color-surface-3) !important;
+	border-radius: var(--radius-md) !important;
+	box-shadow: var(--shadow-card-hover) !important;
 }
 
 /* Select items inside the dropdown */
-[data-slot="item"],
-[role="option"] {
-  font-family: var(--font-body) !important;
-  font-size: 0.875rem !important;
-  color: var(--color-ink-soft) !important;
-  background-color: var(--color-surface) !important;
-  cursor: pointer;
+[data-slot='item'],
+[role='option'] {
+	font-family: var(--font-body) !important;
+	font-size: 0.875rem !important;
+	color: var(--color-ink-soft) !important;
+	background-color: var(--color-surface) !important;
+	cursor: pointer;
 }
 
-[data-slot="item"]:hover,
-[role="option"]:hover,
-[data-slot="item"][data-highlighted],
-[role="option"][aria-selected="true"] {
-  background-color: var(--color-surface-2) !important;
-  color: var(--color-ink) !important;
+[data-slot='item']:hover,
+[role='option']:hover,
+[data-slot='item'][data-highlighted],
+[role='option'][aria-selected='true'] {
+	background-color: var(--color-surface-2) !important;
+	color: var(--color-ink) !important;
 }
 
 /* Placeholder text */
-[data-slot="select"] [data-placeholder],
+[data-slot='select'] [data-placeholder],
 input::placeholder,
 textarea::placeholder {
-  color: var(--color-ink-faint) !important;
+	color: var(--color-ink-faint) !important;
 }
 
 /* Native select fallback */
 select {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-surface-3);
-  color: var(--color-ink);
-  font-family: var(--font-body);
-  border-radius: var(--radius-md);
-  padding: 0.5rem 0.75rem;
+	background-color: var(--color-surface);
+	border: 1px solid var(--color-surface-3);
+	color: var(--color-ink);
+	font-family: var(--font-body);
+	border-radius: var(--radius-md);
+	padding: 0.5rem 0.75rem;
 }
 
 select:focus {
-  outline: none;
-  border-color: var(--color-brand);
+	outline: none;
+	border-color: var(--color-brand);
 }
 
 select option {
-  background-color: var(--color-surface);
-  color: var(--color-ink);
+	background-color: var(--color-surface);
+	color: var(--color-ink);
 }

@@ -24,9 +24,11 @@ onMounted(async () => {
   // Supabase handles the token in the URL automatically via @nuxtjs/supabase
   // Redirect after a short delay
   // setTimeout(() => router.push("/dashboard"), 1500);
-  const { data, error } = await supabase.auth.getSession()
+  const { data, error } = await supabase.auth.exchangeCodeForSession(window.location.href)
 
-  if (data.session) {
+  if (error) {
+    console.error(error)
+  } else {
     // user is authenticated via email link
     navigateTo('/dashboard')
   }

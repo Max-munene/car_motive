@@ -1,7 +1,6 @@
 /** @format */
 
 // server/api/listings/index.post.ts
-import { createError } from 'nuxt/app';
 import { useServerSupabase, getServerUser } from '~/server/utils/supabase';
 
 export default defineEventHandler(async (event) => {
@@ -45,13 +44,9 @@ export default defineEventHandler(async (event) => {
 
 	const { data, error } = await supabase
 		.from('car_listings')
-		.insert({
-			payload,
-			body,
-			seller_id: user.id, // REQUIRED FIX
-		})
+		.insert(payload)
 		.select()
-		.maybesingle();
+		.single();
 
 	if (error) {
 		throw createError({ statusCode: 500, message: error.message });

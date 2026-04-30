@@ -7,37 +7,7 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
-import { onMounted, watch } from 'vue';
-import { useAuth } from './composables/useAuth';
-import { se } from 'date-fns/locale';
-
-const { user, fetchProfile } = useAuth();
-const { fetchSavedIds } = useSavedCars();
-
-if (import.meta.client) {
-  onMounted( () => {
-    const supabase = useSupabaseClient(); 
-    supabase.auth.onAuthStateChange(async(_: any, session: { user: any; }) => {
-      if (session?.user) {
-        await fetchProfile();
-        await fetchSavedIds();
-      }
-    });
-   
-  });
-
-  watch(user, async (u) => {
-    if (u) {
-      await fetchProfile();
-      await fetchSavedIds();
-    }
-  });
-}
-</script>
-
-<!-- <script setup lang="ts">
 const { user, fetchProfile } = useAuth();
 const { fetchSavedIds } = useSavedCars();
 
@@ -56,4 +26,4 @@ watch(user, async (u) => {
     await fetchSavedIds();
   }
 });
-</script> -->
+</script>

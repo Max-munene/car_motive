@@ -2,18 +2,18 @@
   <div class="bg-background min-h-screen">
     <Navbar />
 
-    <section class="relative min-h-[90vh] flex items-center overflow-hidden border-b border-surface-3">
-      <div class="absolute inset-0 z-0">
+    <section class="relative min-h-[95vh] flex items-center overflow-hidden border-b border-surface-3">
+      <div class="absolute inset-0 ">
         <img :src="heroImage"
           alt="Luxury car"
           class="w-full h-full object-cover"
         />
-        <div class="absolute inset-0 bg-linear-to-b from-white to-transparent" />
+        <div class="absolute inset-0 bg-linear-to-b from-black/50 via-black/70 to-white/100" />
       </div>
 
       <div class="relative z-10 container mx-auto px-6 py-24 text-center">
         <div class="max-w-4xl mx-auto space-y-8">
-          <h1 class="font-display text-4xl md:text-7xl font-700 tracking-tight text-white">
+          <h1 class="font-display text-4xl md:text-7xl font-700 tracking-tight " style="color: white;">
             Buy Cars With 
             <span :style="{ color: 'var(--color-brand)' }">Confidence</span>, Not Guesswork
           </h1>
@@ -23,7 +23,7 @@
             <UButton
               to="/cars"
               size="xl"
-              class="font-body font-500 px-8"
+              class="font-body font-500 px-8 flex items-center justify-center"
               :style="{ backgroundColor: 'var(--color-brand)', color: 'white' }"
             >
               Explore Listings

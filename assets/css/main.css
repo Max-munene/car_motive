@@ -17,10 +17,10 @@
 /* ── Design Tokens ─────────────────────────────────────────── */
 :root {
 	/* Brand */
-	--color-brand: #08a4a7; /*Electric Blue — bold, confident */
-	--color-brand-light: #91ffff;
-	--color-brand-dark: #08a4a7;
-	--color-brand-subtle: #e9ffff;
+	--color-brand: #0da2e7; /*Electric Blue — bold, confident */
+	--color-brand-light: #77d4ff;
+	--color-brand-dark: #0076ad;
+	--color-brand-subtle: #a7dff8;
 
 	/* Neutrals — warm, not cold */
 	--color-ink: #1a1614; /* Almost black, warm tint */

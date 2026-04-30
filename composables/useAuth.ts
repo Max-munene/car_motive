@@ -30,7 +30,7 @@ export const useAuth = () => {
 				.from('profiles')
 				.select('*')
 				.eq('id', user.value.id)
-				.maybesingle();
+				.single();
 			if (data) profile.value = data as Profile;
 		} catch {
 			profile.value = null;
@@ -62,15 +62,6 @@ export const useAuth = () => {
 			email,
 			password,
 		});
-		if (error) {
-			if (error.message.toLowerCase().includes('email not confirmed')) {
-				throw new Error(
-					'Please confirm your email first. Check your inbox for a link from BRIM Automotive.',
-				);
-			}
-			throw error;
-		}
-
 		if (error) throw error;
 		if (data.user) {
 			const { data: prof } = await supabase

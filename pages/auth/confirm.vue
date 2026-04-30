@@ -12,23 +12,13 @@
 </template>
 
 <script setup lang="ts">
-import { navigateTo, useRouter } from 'nuxt/app';
-import { onMounted } from 'vue';
-
 definePageMeta({ layout: false });
 
 const router = useRouter();
-const supabase = useSupabaseClient()
 
 onMounted(async () => {
   // Supabase handles the token in the URL automatically via @nuxtjs/supabase
   // Redirect after a short delay
-  // setTimeout(() => router.push("/dashboard"), 1500);
-  const { data, error } = await supabase.auth.getSession()
-
-  if (data.session) {
-    // user is authenticated via email link
-    navigateTo('/dashboard')
-  }
+  setTimeout(() => router.push("/dashboard"), 1500);
 });
 </script>

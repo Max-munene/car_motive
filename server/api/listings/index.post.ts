@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
 		.from('car_listings')
 		.insert(payload)
 		.select()
-		.single();
+		.maybeSingle();
 
 	if (error) {
 		throw createError({ statusCode: 500, message: error.message });
